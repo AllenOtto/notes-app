@@ -16,7 +16,7 @@ body {
 
 .container {
     margin: 0 auto;
-    width: 25rem;
+    width: 50rem;
     text-align: center;
 }
 
@@ -37,9 +37,9 @@ form {
 
 .input-section input {
     display: flex;
-    width: 100%;
-    padding: .5rem;
-    margin-bottom: .5rem;
+    width: 60%;
+    padding: .2rem 1.5rem;
+    margin: .5rem auto;
     border: none;
     border-radius: 20px;
     outline: none;
@@ -62,5 +62,32 @@ form {
 }
 
 .output-section {
-    border: 1px solid white;
+    display: flex;
+    /* border: 1px solid white; */
+
+}
+
+.note-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    color: #00539C;
+    width: 18rem;
+    height: 10rem;
+    background-color: #EEA47F;
+    border-radius: 10px;
+    /* border: 3px solid white; */
+    /* overflow: hidden; */
+}
+
+.note-body {
+    text-align: left;
+    padding: .2rem .5rem;
+}
+
+.note-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: .2rem .5rem;
 }
