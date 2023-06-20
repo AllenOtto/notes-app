@@ -116,7 +116,20 @@ class UI {
                 e.target.parentElement.parentElement.remove();    
                 // Remove note object from the notes array
                 notesArr = notesArr.filter(note => note.id !== +e.target.dataset.id);
+                // Update localStorage with changes to notesArr
+                Storage.addNotesToLocalStorage(notesArr);
             }
         });
     }
 }
+
+// Set an event listener to the window object to call functions on page load.
+// Notes stored in the notesArr/localStorage should show up on page load. 
+// They should therefore be stored under this window.eventListener
+window.addEventListener("DOMContentLoaded", () => {
+    // Display our notes on page load
+    UI.displayNote(notesArr);
+    // Avail the removeNoteFromUI function on page load
+    // It was previously only available after form submission
+    UI.removeNoteFromUI();
+});
