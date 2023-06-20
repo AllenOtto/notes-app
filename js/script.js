@@ -7,10 +7,27 @@ const note = document.querySelector('[data-input]'); // input field
 note.maxLength = 90;
 const output = document.querySelector('.output-section'); // output div
 const date = document.querySelector('.note-footer > p'); // current date display paragraph
-const trashCan = document.querySelector('.note-footer > span'); 
+const trashCan = document.querySelector('.note-footer > span');
+
+// Storage for storing notes persistently in local storage
+// Declared synchronously above where its getNotesFromLocalStorage 
+// function is called to populate the notes array because it has to be
+// initialized before it's called; otherwise it throws an error. 
+class Storage {
+    // Add notes array to local storage
+    static addNotesToLocalStorage(notesArray) {
+        localStorage.setItem("notes", JSON.stringify(notesArray));
+    }
+    
+    // Get notes array from local storage
+    static getNotesFromLocalStorage() {
+        let storage = !localStorage.getItem("notes") ? [] : JSON.parse(localStorage.getItem('notes'));
+        return storage;
+    }
+}
 
 // Storage array for our note objects
-let notesArr = [];
+let notesArr = Storage.getNotesFromLocalStorage();
 
 form.addEventListener("submit", (e) => {
     // Prevent page refresh
@@ -101,19 +118,5 @@ class UI {
                 notesArr = notesArr.filter(note => note.id !== +e.target.dataset.id);
             }
         });
-    }
-}
-
-// Storage for storing notes persistently in local storage
-class Storage {
-    // Add notes array to local storage
-    static addNotesToLocalStorage(notesArray) {
-        localStorage.setItem("notes", JSON.stringify(notesArray));
-    }
-    
-    // Get notes array from local storage
-    static getNotesFromLocalStorage() {
-        let storage = !localStorage.getItem("notes") ? [] : JSON.parse(localStorage.getItem('notes'));
-        return storage;
     }
 }
