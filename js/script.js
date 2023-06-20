@@ -87,9 +87,15 @@ class UI {
 
     static removeNoteFromUI() {
         output.addEventListener('click', (e) => {
-            // Remove note from the UI
-            e.target.parentElement.parentElement.remove();
+            // Remove note from the UI if the target of the click event (e.target) in the 
+            // current target (the output div - the element on which the event listener
+            // is attached) has a class of 'remove'.
+            if(e.target.classList.contains('remove')) {
+                e.target.parentElement.parentElement.remove();    
+            }
+            
             // Remove note object from the notes array
+
         });
     }
 }
