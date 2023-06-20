@@ -19,8 +19,10 @@ form.addEventListener("submit", (e) => {
     let date = Note.getCurrentDate();
     // Create our object and pass it our random id and note (user input)
     const noteObj = new Note(id, note.value, date);
+    // Clear input field after object has been created
+    UI.clearInput();
     // Add note objects to note array using the spread operator
-    noteArr = [...noteArr, noteObj];
+    noteArr = [noteObj, ...noteArr];
     // Display our note
     UI.displayNote(noteArr);
 });
@@ -71,5 +73,9 @@ class UI {
         });
 
         output.innerHTML = (displayNote).join(" ");
+    }
+
+    static clearInput() {
+        note.value = "";
     }
 }
