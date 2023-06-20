@@ -8,7 +8,7 @@ const output = document.querySelector('[data-output]');
 const date = document.querySelector('[data-date]');
 
 // Added storage for our note objects
-let noteArr = [];
+let notesArr = [];
 
 form.addEventListener("submit", (e) => {
     // Prevent page refresh
@@ -22,9 +22,9 @@ form.addEventListener("submit", (e) => {
     // Clear input field after object has been created
     UI.clearInput();
     // Add note objects to note array using the spread operator
-    noteArr = [noteObj, ...noteArr];
+    notesArr = [noteObj, ...notesArr];
     // Display our note
-    UI.displayNote(noteArr);
+    UI.displayNote(notesArr);
 });
 
 // Blueprint for defining the characteristics and behaviour
