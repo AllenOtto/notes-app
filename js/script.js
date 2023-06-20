@@ -4,6 +4,7 @@
 
 const form = document.querySelector('[data-form]'); 
 const note = document.querySelector('[data-input]'); // input field
+note.maxLength = 90;
 const output = document.querySelector('.output-section'); // output div
 const date = document.querySelector('.note-footer > p'); // current date display paragraph
 const trashCan = document.querySelector('.note-footer > span'); 
@@ -28,6 +29,8 @@ form.addEventListener("submit", (e) => {
     UI.displayNote(notesArr);
     // Remove Note from user interface (DOM)
     UI.removeNoteFromUI();
+    // Add notes array to localStorage for persistence
+    Storage.addNotesToLocalStorage(notesArr);
 });
 
 // Blueprint for defining the characteristics and behaviour
@@ -96,5 +99,12 @@ class UI {
                 notesArr = notesArr.filter(note => note.id !== +e.target.dataset.id);
             }
         });
+    }
+}
+
+// Storage for storing notes persistently in local storage
+class Storage {
+    static addNotesToLocalStorage(notesArray) {
+        localStorage.setItem("notes", JSON.stringify(notesArray));
     }
 }
