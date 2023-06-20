@@ -5,6 +5,7 @@
 const form = document.querySelector('[data-form]');
 const note = document.querySelector('[data-input]');
 const output = document.querySelector('[data-output]');
+const date = document.querySelector('[data-date]');
 
 // Added storage for our note objects
 let noteArr = [];
@@ -21,7 +22,7 @@ form.addEventListener("submit", (e) => {
     // Add note objects to note array using the spread operator
     noteArr = [...noteArr, noteObj];
     // Display our note
-    Note.displayNote(noteArr);
+    UI.displayNote(noteArr);
 });
 
 // Blueprint for defining the characteristics and behaviour
@@ -47,14 +48,28 @@ class Note {
         return day.padStart(2, '0') + '-' + month.padStart(2, '0') + '-' + year;
     }
 
-    static displayNote(list) {
-        // Display our note on the frontend
-        output.innerHTML = "<p>Going OUT</p>";
-        console.log(list);
-    }
-
     // Function definition of our note-item-id generator
     static generateId() {
         return Math.random() * 1000000;
+    }
+}
+
+class UI {
+    static displayNote(list) {
+        // Display each of our notes in the DOM individually
+        let displayNote = list.map((note) => {
+            return `
+                <div class="note-container">
+                    <div class="note-body">
+                        <p>${note.note}</p>
+                    </div>
+                    <div class="note-footer">
+                        <p data-date>${note.date}</p>
+                        <span>🗑️</span>
+                    </div>
+                </div>`;
+        });
+
+        output.innerHTML = (displayNote).join(" ");
     }
 }
