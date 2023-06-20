@@ -2,12 +2,13 @@
 // Enable addition to local storage
 // Enable Display, Editing and deletion
 
-const form = document.querySelector('[data-form]');
-const note = document.querySelector('[data-input]');
-const output = document.querySelector('[data-output]');
-const date = document.querySelector('[data-date]');
+const form = document.querySelector('[data-form]'); 
+const note = document.querySelector('[data-input]'); // input field
+const output = document.querySelector('.output-section'); // output div
+const date = document.querySelector('.note-footer > p'); // current date display paragraph
+const trashCan = document.querySelector('.note-footer > span'); 
 
-// Added storage for our note objects
+// Storage array for our note objects
 let notesArr = [];
 
 form.addEventListener("submit", (e) => {
@@ -15,7 +16,7 @@ form.addEventListener("submit", (e) => {
     e.preventDefault();
     // Generate a random Id for our Note class instance
     let id = Note.generateId(); 
-    // 
+    // Get data as at when note object was created
     let date = Note.getCurrentDate();
     // Create our object and pass it our random id and note (user input)
     const noteObj = new Note(id, note.value, date);
@@ -25,6 +26,8 @@ form.addEventListener("submit", (e) => {
     notesArr = [noteObj, ...notesArr];
     // Display our note
     UI.displayNote(notesArr);
+    // Remove Note from user interface (DOM)
+    UI.removeNoteFromUI();
 });
 
 // Blueprint for defining the characteristics and behaviour
@@ -67,7 +70,7 @@ class UI {
                     </div>
                     <div class="note-footer">
                         <p data-date>${note.date}</p>
-                        <span>🗑️</span>
+                        <span class="remove">🗑️</span>
                     </div>
                 </div>`;
         });
@@ -75,7 +78,18 @@ class UI {
         output.innerHTML = (displayNote).join(" ");
     }
 
+    // Function to remove user input from input field to allow for fresh input. 
+    // This input.value is cleared only after it has been used to create our 
+    // note object in the backend
     static clearInput() {
         note.value = "";
+    }
+
+    static removeNoteFromUI() {
+        output.addEventListener('click', (e) => {
+            // Remove note from the UI
+            e.target.parentElement.parentElement.remove();
+            // Remove note object from the notes array
+        });
     }
 }

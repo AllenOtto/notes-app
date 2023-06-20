@@ -81,7 +81,8 @@ form {
 
 .note-body {
     text-align: left;
-    padding: .2rem .5rem;
+    padding: .5rem .8rem;
+    color: black;
 }
 
 .note-footer {
