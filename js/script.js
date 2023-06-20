@@ -70,7 +70,7 @@ class UI {
                     </div>
                     <div class="note-footer">
                         <p data-date>${note.date}</p>
-                        <span class="remove">🗑️</span>
+                        <span class="remove" data-id="${note.id}">🗑️</span>
                     </div>
                 </div>`;
         });
@@ -92,10 +92,9 @@ class UI {
             // is attached) has a class of 'remove'.
             if(e.target.classList.contains('remove')) {
                 e.target.parentElement.parentElement.remove();    
+                // Remove note object from the notes array
+                notesArr = notesArr.filter(note => note.id !== +e.target.dataset.id);
             }
-            
-            // Remove note object from the notes array
-
         });
     }
 }
