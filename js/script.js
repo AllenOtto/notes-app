@@ -31,6 +31,8 @@ form.addEventListener("submit", (e) => {
     UI.removeNoteFromUI();
     // Add notes array to localStorage for persistence
     Storage.addNotesToLocalStorage(notesArr);
+    // Get notes array from localStorage
+    Storage.getNotesFromLocalStorage();
 });
 
 // Blueprint for defining the characteristics and behaviour
@@ -104,7 +106,16 @@ class UI {
 
 // Storage for storing notes persistently in local storage
 class Storage {
+    // Add notes array to local storage
     static addNotesToLocalStorage(notesArray) {
         localStorage.setItem("notes", JSON.stringify(notesArray));
+    }
+    
+    // Get notes array from local storage
+    static getNotesFromLocalStorage() {
+        let storage = !localStorage.getItem("notes") ? [] : JSON.parse(localStorage.getItem('notes'));
+        return storage;
+            
+        
     }
 }
