@@ -115,7 +115,5 @@ class Storage {
     static getNotesFromLocalStorage() {
         let storage = !localStorage.getItem("notes") ? [] : JSON.parse(localStorage.getItem('notes'));
         return storage;
-            
-        
     }
 }
