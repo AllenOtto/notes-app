@@ -44,6 +44,8 @@ form.addEventListener("submit", (e) => {
     notesArr = [noteObj, ...notesArr];
     // Display our note
     UI.displayNote(notesArr);
+    // Edit Note
+    UI.editNote();
     // Remove Note from user interface (DOM)
     UI.removeNoteFromUI();
     // Add notes array to localStorage for persistence
@@ -88,11 +90,14 @@ class UI {
             return `
                 <div class="note-container">
                     <div class="note-body">
-                        <p>${note.note}</p>
+                        <p class="note-p">${note.note}</p>
                     </div>
                     <div class="note-footer">
                         <p data-date>${note.date}</p>
-                        <span class="remove" data-id="${note.id}">🗑️</span>
+                        <div>
+                            <span class="remove" data-id="${note.id}">🗑️</span>
+                            <span class="edit" data-id="${note.id}">🖊️</span>
+                        </div>
                     </div>
                 </div>`;
         });
@@ -100,7 +105,7 @@ class UI {
         output.innerHTML = (displayNote).join(" ");
     }
 
-    // Function to remove user input from input field to allow for fresh input. 
+    // Function to remove user input from input field to allow for fresh input.
     // This input.value is cleared only after it has been used to create our 
     // note object in the backend
     static clearInput() {
@@ -113,7 +118,7 @@ class UI {
             // current target (the output div - the element on which the event listener
             // is attached) has a class of 'remove'.
             if(e.target.classList.contains('remove')) {
-                e.target.parentElement.parentElement.remove();    
+                e.target.parentElement.parentElement.parentElement.remove();
                 // Remove note object from the notes array
                 notesArr = notesArr.filter(note => note.id !== +e.target.dataset.id);
                 // Update localStorage with changes to notesArr
@@ -121,6 +126,46 @@ class UI {
             }
         });
     }
+
+    static editNote() {
+        output.addEventListener('click', (e) => {
+            if(e.target.classList.contains('edit')) {
+                let p = e.target.closest(".note-container").querySelector(".note-p");
+                p.contentEditable = true;
+                e.target.innerHTML = "<b>Save</b>";
+                e.target.style.color = "maroon";
+                e.target.addEventListener('click', () => {
+                    let noteId = e.target.dataset.id;
+                    let updatedText = p.innerText;
+                    for(let i = 0; i < notesArr.length; i++) {
+                        if(notesArr[i].id === +e.target.dataset.id) {
+                            notesArr[i].note = p.innerText;
+                        }
+                    }
+                    p.contentEditable = false;
+                    e.target.innerText = "🖊️";
+                    Storage.addNotesToLocalStorage(notesArr);
+                });
+            }
+
+        });
+    }
+
+    // static editNote() {
+    //     // Edit innerText of the note whose edit icon has been clicked 
+    //     if(e.target.classList.contains("edit")) {
+    //         let p = e.target.closest(".note-container").querySelector(".note-paragraph");
+    //         p.contentEditable = true;
+    //         let noteId = e.target.dataset.id;
+    //         for(let i = 0; i < notesArr.length; i++) {
+    //             if(notesArr.id === +noteId) {
+    //                 notesArr.note = p.innerText;
+    //             }
+    //         }
+
+    //         p.contentEditable = false;
+    //     }
+    // }
 }
 
 // Set an event listener to the window object to call functions on page load.
@@ -132,4 +177,6 @@ window.addEventListener("DOMContentLoaded", () => {
     // Avail the removeNoteFromUI function on page load
     // It was previously only available after form submission
     UI.removeNoteFromUI();
+    // Function to edit note
+    UI.editNote();
 });
