@@ -127,45 +127,44 @@ class UI {
         });
     }
 
+    // Function to edit note 
     static editNote() {
+        // Set an event listener to listen for a click on our output div
         output.addEventListener('click', (e) => {
+            // When a click happens, check to see that the target of the click has the class "edit" on it
+            // If it does, the purpose of the click is to edit the note clicked on
             if(e.target.classList.contains('edit')) {
+                // Fetch the paragraph clicked on for editing
                 let p = e.target.closest(".note-container").querySelector(".note-p");
+                // Set paragraph to be edited to editable
                 p.contentEditable = true;
+                // Change the pencil icon temporarily to save to prompt one to click it to save changes made to paragraph
                 e.target.innerHTML = "<b>Save</b>";
-                e.target.style.color = "maroon";
+                // Give the Save text a blue color
+                e.target.style.color = "blue";
+                // Add an eventListener that waits fot a click event on the now "Save" button
                 e.target.addEventListener('click', () => {
-                    let noteId = e.target.dataset.id;
-                    let updatedText = p.innerText;
+                    // Create a loop that compares ids in the notesArr with the id we are currently working on
+                    // Find the note object with a matching id and update its note property
+                    // with the updated text currently in the paragraph
+                    // The id from the html is in string format. Convert it to a number before comparing
                     for(let i = 0; i < notesArr.length; i++) {
                         if(notesArr[i].id === +e.target.dataset.id) {
                             notesArr[i].note = p.innerText;
                         }
                     }
+                    // After making changes
+                    // Set the paragraph back to not editable
                     p.contentEditable = false;
+                    // Change the content of our edit button back to our pen icon from the 'save' text
                     e.target.innerText = "🖊️";
+                    // Update localStorage with our updated notesArr
                     Storage.addNotesToLocalStorage(notesArr);
                 });
             }
 
         });
     }
-
-    // static editNote() {
-    //     // Edit innerText of the note whose edit icon has been clicked 
-    //     if(e.target.classList.contains("edit")) {
-    //         let p = e.target.closest(".note-container").querySelector(".note-paragraph");
-    //         p.contentEditable = true;
-    //         let noteId = e.target.dataset.id;
-    //         for(let i = 0; i < notesArr.length; i++) {
-    //             if(notesArr.id === +noteId) {
-    //                 notesArr.note = p.innerText;
-    //             }
-    //         }
-
-    //         p.contentEditable = false;
-    //     }
-    // }
 }
 
 // Set an event listener to the window object to call functions on page load.
