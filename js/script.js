@@ -7,7 +7,6 @@ const note = document.querySelector('[data-input]'); // input field
 note.maxLength = 90;
 const output = document.querySelector('.output-section'); // output div
 const date = document.querySelector('.note-footer > p'); // current date display paragraph
-const trashCan = document.querySelector('.note-footer > span');
 
 // Storage for storing notes persistently in local storage
 // Declared synchronously above where its getNotesFromLocalStorage 
@@ -16,11 +15,14 @@ const trashCan = document.querySelector('.note-footer > span');
 class Storage {
     // Add notes array to local storage
     static addNotesToLocalStorage(notesArray) {
+        // Parse it into a JSON string before pushing it to localStorage with the key of 'notes'
         localStorage.setItem("notes", JSON.stringify(notesArray));
     }
     
     // Get notes array from local storage
     static getNotesFromLocalStorage() {
+        // Chech if the 'notes' key does not exist in localStorage. If true, return an empty array
+        // If it does, fetch the value of it and parse it before saving it to our 'storage' variable
         let storage = !localStorage.getItem("notes") ? [] : JSON.parse(localStorage.getItem('notes'));
         return storage;
     }
