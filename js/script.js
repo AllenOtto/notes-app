@@ -48,6 +48,8 @@ form.addEventListener("submit", (e) => {
     UI.displayNote(notesArr);
     // Edit Note
     UI.editNote();
+    // Function to delete all notes from UI, notesArr, and localStorage
+    UI.deleteAll();
     // Remove Note from user interface (DOM)
     UI.removeNoteFromUI();
     // Add notes array to localStorage for persistence
@@ -138,6 +140,7 @@ class UI {
             if(e.target.classList.contains('edit')) {
                 // Fetch the paragraph clicked on for editing
                 let p = e.target.closest(".note-container").querySelector(".note-p");
+                p.style.overflow = "hidden";
                 // Set paragraph to be edited to editable
                 p.contentEditable = true;
                 // Change the pencil icon temporarily to save to prompt one to click it to save changes made to paragraph
@@ -167,6 +170,15 @@ class UI {
 
         });
     }
+
+    static deleteAll() {
+        // Create function to delete all notes from UI, notesArr and localStorage
+        document.querySelector('.purge').addEventListener('click', () => {
+            notesArr = [];
+            Storage.addNotesToLocalStorage(notesArr);
+            UI.displayNote(notesArr);
+        });
+    }
 }
 
 // Set an event listener to the window object to call functions on page load.
@@ -180,4 +192,6 @@ window.addEventListener("DOMContentLoaded", () => {
     UI.removeNoteFromUI();
     // Function to edit note
     UI.editNote();
+    // Function to delete all notes from UI, notesArr, and localStorage
+    UI.deleteAll();
 });
