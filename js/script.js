@@ -143,6 +143,8 @@ class UI {
                 p.style.overflow = "hidden";
                 // Set paragraph to be edited to editable
                 p.contentEditable = true;
+                // Focus in on text input when editable is set to true
+                p.focus();
                 // Change the pencil icon temporarily to save to prompt one to click it to save changes made to paragraph
                 e.target.innerHTML = "<b>Save</b>";
                 // Give the Save text a blue color
