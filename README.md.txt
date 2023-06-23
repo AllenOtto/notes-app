@@ -1,0 +1,1 @@
+// When you edit a note, you can add more text than what is ideal
