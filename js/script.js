@@ -52,6 +52,8 @@ form.addEventListener("submit", (e) => {
     UI.deleteAll();
     // Remove Note from user interface (DOM)
     UI.removeNoteFromUI();
+    // Implemented condition around showing/hiding the delete all button
+    UI.removeDeleteAllBtn();
     // Add notes array to localStorage for persistence
     Storage.addNotesToLocalStorage(notesArr);
     // Get notes array from localStorage
@@ -127,6 +129,8 @@ class UI {
                 notesArr = notesArr.filter(note => note.id !== +e.target.dataset.id);
                 // Update localStorage with changes to notesArr
                 Storage.addNotesToLocalStorage(notesArr);
+                // Implemented condition around showing/hiding the delete all button
+                UI.removeDeleteAllBtn();
             }
         });
     }
@@ -179,7 +183,17 @@ class UI {
             notesArr = [];
             Storage.addNotesToLocalStorage(notesArr);
             UI.displayNote(notesArr);
+            // Implemented condition around showing/hiding the delete all button
+            UI.removeDeleteAllBtn();
         });
+    }
+
+    static removeDeleteAllBtn() {
+        if(notesArr.length === 0) {
+            document.querySelector(".delete-all__btn").style.display = "none";
+        } else {
+            document.querySelector(".delete-all__btn").style.display = "flex";
+        }
     }
 }
 
@@ -196,4 +210,6 @@ window.addEventListener("DOMContentLoaded", () => {
     UI.editNote();
     // Function to delete all notes from UI, notesArr, and localStorage
     UI.deleteAll();
+    // Implemented condition around showing/hiding the delete all button
+    UI.removeDeleteAllBtn();
 });
