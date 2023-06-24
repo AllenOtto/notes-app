@@ -180,8 +180,11 @@ class UI {
     static deleteAll() {
         // Create function to delete all notes from UI, notesArr and localStorage
         document.querySelector('.delete-all__btn').addEventListener('click', () => {
+            // Empty notes array
             notesArr = [];
+            // Update local storage with our now empty array
             Storage.addNotesToLocalStorage(notesArr);
+            // Update our UI with our now empty array
             UI.displayNote(notesArr);
             // Implemented condition around showing/hiding the delete all button
             UI.removeDeleteAllBtn();
