@@ -191,8 +191,10 @@ class UI {
         });
     }
 
+    // Removes the delete all button from the UI if there is no note in notesArr 
+    // and therefore no item displayed on the UI (frontend)
     static removeDeleteAllBtn() {
-        if(notesArr.length === 0) {
+        if(notesArr.length < 1) {
             document.querySelector(".delete-all__btn").style.display = "none";
         } else {
             document.querySelector(".delete-all__btn").style.display = "flex";
