@@ -175,7 +175,7 @@ class UI {
 
     static deleteAll() {
         // Create function to delete all notes from UI, notesArr and localStorage
-        document.querySelector('.purge').addEventListener('click', () => {
+        document.querySelector('.delete-all__btn').addEventListener('click', () => {
             notesArr = [];
             Storage.addNotesToLocalStorage(notesArr);
             UI.displayNote(notesArr);
